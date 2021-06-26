@@ -155,43 +155,41 @@ app
     res.send({ message: "Done" });
   });
 app.get("/checkLogin", async (req, res) => {
-  if (req.isAuthenticated()) {
-    console.log(" = = Request is authenticated = = ");
+  // if (req.isAuthenticated()) {
+  //   console.log(" = = Request is authenticated = = ");
 
-    res.send({
-      _id: req.user._id,
-      companyname: req.user.companyname,
-      username: req.user.username,
-      firstname: req.user.firstname,
-      lastname: req.user.lastname,
-      appliedjobs: req.user.appliedjobs,
-    });
-  } else {
-    res.send({ message: false });
-    console.log("Not authenticated!");
-  }
-
-  //localhost method works below:
-
-  // for (let session in req.sessionStore.sessions) {
-  //   let data = JSON.parse(req.sessionStore.sessions[session]);
-  //   console.log(data);
-  //   if (data.authenticated) {
-  //     console.log("Authenticated!");
-  //     console.log("Data.companyname=" + data.passport.user.companyname);
-  //     res.send({
-  //       _id: data.passport.user._id,
-  //       companyname: data.passport.user.companyname,
-  //       username: data.passport.user.username,
-  //       firstname: data.passport.user.firstname,
-  //       lastname: data.passport.user.lastname,
-  //       appliedjobs: data.passport.user.appliedjobs,
-  //     });
-  //     return;
-  //   }
+  //   res.send({
+  //     _id: req.user._id,
+  //     companyname: req.user.companyname,
+  //     username: req.user.username,
+  //     firstname: req.user.firstname,
+  //     lastname: req.user.lastname,
+  //     appliedjobs: req.user.appliedjobs,
+  //   });
+  // } else {
+  //   res.send({ message: false });
+  //   console.log("Not authenticated!");
   // }
-  // res.send({ message: false });
-  // console.log("Not authenticated!");
+
+  for (let session in req.sessionStore.sessions) {
+    let data = JSON.parse(req.sessionStore.sessions[session]);
+    console.log(data);
+    if (data.authenticated) {
+      console.log("Authenticated!");
+      console.log("Data.companyname=" + data.passport.user.companyname);
+      res.send({
+        _id: data.passport.user._id,
+        companyname: data.passport.user.companyname,
+        username: data.passport.user.username,
+        firstname: data.passport.user.firstname,
+        lastname: data.passport.user.lastname,
+        appliedjobs: data.passport.user.appliedjobs,
+      });
+      return;
+    }
+  }
+  res.send({ message: false });
+  console.log("Not authenticated!");
 });
 app.get("/logout", async (request, response) => {
   request.logout();
