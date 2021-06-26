@@ -116,7 +116,7 @@ app
   .route("/login")
   .post(async (req, res, next) => {
     passport.authenticate("local", { session: true }, (err, user, info) => {
-      if (err) res.err(err);
+      if (err) res.send({ message: err });
       else {
         if (!user) {
           res.send(info);
