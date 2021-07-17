@@ -16,15 +16,15 @@ con.on("open", function () {
 });
 const app = Express();
 const port = process.env.PORT || 5000;
-// app.use((req, res, next) => {
-//   res.append("Access-Control-Allow-Origin", ["*"]);
-//   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-//   res.append(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type,Origin,Accept,Authorization"
-//   );
-//   next();
-// });
+app.use((req, res, next) => {
+  res.append("Access-Control-Allow-Origin", ["*"]);
+  res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.append(
+    "Access-Control-Allow-Headers",
+    "Content-Type,Origin,Accept,Authorization"
+  );
+  next();
+});
 app.use(cors({ credentials: true, origin: "https://job-helper.netlify.app" }));
 app.use(cookieParser("mysecretkey"));
 app.use(Express.json());
@@ -40,7 +40,6 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
       sameSite: "strict",
       secure: false,
       maxAge: 60 * 60 * 24 * 1000,
