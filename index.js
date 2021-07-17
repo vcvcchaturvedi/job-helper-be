@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors({ credentials: true, origin: "https://job-helper.netlify.app" }));
+app.use(cors({ credentials: true, origin: "https://job-helper.netlify.app/" }));
 app.use(cookieParser("mysecretkey"));
 app.use(Express.json());
 app.use(
@@ -33,7 +33,7 @@ app.use(
     extended: true,
   })
 );
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: "mysecretkey",
@@ -41,7 +41,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: false,
-      sameSite: "none",
+      sameSite: "lax",
       secure: false,
       maxAge: 60 * 60 * 24 * 1000,
     },
