@@ -145,6 +145,7 @@ app
                 res.send("Error in logging in...");
               } else {
                 console.log("Authenticated " + req.user);
+                res.redirect("/");
                 res.send({
                   _id: user._id,
                   companyname: user.companyname,
@@ -153,13 +154,12 @@ app
                   lastname: user.lastname,
                   appliedjobs: user.appliedjobs,
                 });
-                res.redirect("/");
               }
             });
           }
         }
       }
-    })(req, res, next);
+    });
   })
   .get(async function (req, res) {
     console.log("Login");
