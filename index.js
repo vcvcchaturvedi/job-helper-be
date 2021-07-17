@@ -33,13 +33,15 @@ app.use(
     extended: true,
   })
 );
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(
   session({
     secret: "mysecretkey",
     resave: false,
     saveUninitialized: false,
     cookie: {
+      httpOnly: false,
+      sameSite: "none",
       secure: false,
       maxAge: 60 * 60 * 24 * 1000,
     },
