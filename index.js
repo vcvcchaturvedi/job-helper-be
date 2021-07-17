@@ -153,6 +153,7 @@ app
                   lastname: user.lastname,
                   appliedjobs: user.appliedjobs,
                 });
+                res.redirect("/");
               }
             });
           }
