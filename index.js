@@ -80,7 +80,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
   console.log("Deserializing: " + user);
-  User.findOne(user.username, (err, user) => {
+  User.find(user.username, (err, user) => {
     if (err) {
       console.log("error: " + err);
       done(null, false, { error: err });
