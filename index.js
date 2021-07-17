@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors({ credentials: true, origin: "https://job-helper.netlify.app/" }));
+app.use(cors({ credentials: true, origin: "https://job-helper.netlify.app" }));
 app.use(cookieParser("mysecretkey"));
 app.use(Express.json());
 app.use(
