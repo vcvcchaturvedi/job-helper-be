@@ -37,8 +37,8 @@ app.set("trust proxy", 1);
 app.use(
   session({
     secret: "mysecretkey",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
       httpOnly: false,
       sameSite: "lax",
@@ -80,7 +80,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
   console.log("Deserializing: " + user);
-  User.findOne(user, (err, user) => {
+  User.findById(user._id, (err, user) => {
     if (err) {
       console.log("error: " + err);
       done(null, false, { error: err });
