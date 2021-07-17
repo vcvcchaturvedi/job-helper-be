@@ -140,7 +140,7 @@ app
             req.session.messages = "Login successfull";
             req.session.authenticated = true;
             req.authenticated = true;
-            req.logIn(user, (err) => {
+            req.login(user, (err) => {
               if (err) {
                 res.send("Error in logging in...");
               } else {
