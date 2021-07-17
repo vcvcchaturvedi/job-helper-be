@@ -16,6 +16,23 @@ con.on("open", function () {
 });
 const app = Express();
 const port = process.env.PORT || 5000;
+
+app.set("trust proxy", 1);
+app.use(
+  session({
+    secret: "mysecretkey",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: false,
+      sameSite: "lax",
+      secure: false,
+      maxAge: 60 * 60 * 24 * 1000,
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -33,23 +50,6 @@ app.use(
     extended: true,
   })
 );
-app.set("trust proxy", 1);
-app.use(
-  session({
-    secret: "mysecretkey",
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: false,
-      sameSite: "lax",
-      secure: false,
-      maxAge: 60 * 60 * 24 * 1000,
-    },
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
 passport.use(
   new Strategy(function (username, password, done) {
     try {
@@ -145,7 +145,6 @@ app
                 res.send("Error in logging in...");
               } else {
                 console.log("Authenticated " + req.user);
-                res.redirect("/");
                 res.send({
                   _id: user._id,
                   companyname: user.companyname,
@@ -159,7 +158,7 @@ app
           }
         }
       }
-    });
+    })(req, res, next);
   })
   .get(async function (req, res) {
     console.log("Login");
